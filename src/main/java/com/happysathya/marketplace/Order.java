@@ -20,7 +20,7 @@ public class Order {
 
     private static void validate(Order order) {
         if (order.userId == null || order.userId.length() == 0)
-            throw new IllegalStateException("UserId cannot null or empty");
+            throw new IllegalStateException("UserId cannot be null or empty");
         if (order.quantityInKilograms <= 0)
             throw new IllegalStateException("Quantity cannot be less than or equal to zero");
         if (order.price <= 0) throw new IllegalStateException("Price cannot be less than or equal to zero");

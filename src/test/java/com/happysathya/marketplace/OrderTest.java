@@ -12,13 +12,22 @@ public class OrderTest {
 
     @Test
     public void shouldValidateAndThrowException_ifUserIdIsNotSet() {
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () ->
+        IllegalStateException exception1 = assertThrows(IllegalStateException.class, () ->
                 new OrderBuilder()
                         .setPrice(23.0)
                         .setQuantityInKilograms(10)
                         .setOrderType(BUY)
                         .build());
-        assertEquals("UserId cannot null or empty", exception.getMessage());
+        assertEquals("UserId cannot be null or empty", exception1.getMessage());
+
+        IllegalStateException exception2 = assertThrows(IllegalStateException.class, () ->
+                new OrderBuilder()
+                        .setUserId("")
+                        .setPrice(23.0)
+                        .setQuantityInKilograms(10)
+                        .setOrderType(BUY)
+                        .build());
+        assertEquals("UserId cannot be null or empty", exception2.getMessage());
     }
 
     @Test
