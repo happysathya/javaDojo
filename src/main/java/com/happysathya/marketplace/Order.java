@@ -1,5 +1,8 @@
 package com.happysathya.marketplace;
 
+import io.vavr.collection.Seq;
+import io.vavr.control.Validation;
+
 import java.util.UUID;
 
 public class Order {
@@ -16,15 +19,6 @@ public class Order {
         this.quantityInKilograms = orderBuilder.quantityInKilograms;
         this.price = orderBuilder.price;
         this.orderType = orderBuilder.orderType;
-    }
-
-    private static void validate(Order order) {
-        if (order.userId == null || order.userId.length() == 0)
-            throw new IllegalStateException("UserId cannot be null or empty");
-        if (order.quantityInKilograms <= 0)
-            throw new IllegalStateException("Quantity cannot be less than or equal to zero");
-        if (order.price <= 0) throw new IllegalStateException("Price cannot be less than or equal to zero");
-        if (order.orderType == null) throw new IllegalStateException("OrderType has to be either BUY or SELL");
     }
 
     public UUID getOrderId() {
@@ -80,7 +74,10 @@ public class Order {
 
         public Order build() {
             Order order = new Order(this);
-            validate(order);
+            Validation<Seq<String>, Order> validation = OrderValidator.validateOrder(order);
+            if (validation.isInvalid()) {
+                throw new IllegalStateException(validation.getError().mkString(", "));
+            }
             return order;
         }
     }

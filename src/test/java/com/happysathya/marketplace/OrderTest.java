@@ -83,4 +83,14 @@ public class OrderTest {
         assertEquals("OrderType has to be either BUY or SELL", exception.getMessage());
     }
 
+    @Test
+    public void shouldValidateAndThrowExceptionWithCumulativeErrorMessages_ifOneOrMorePropertyIsNotSet() {
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () ->
+                new OrderBuilder()
+                        .setPrice(23.0)
+                        .build());
+        assertEquals("UserId cannot be null or empty, " +
+                "Quantity cannot be less than or equal to zero, " +
+                "OrderType has to be either BUY or SELL", exception.getMessage());
+    }
 }
