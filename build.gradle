@@ -4,8 +4,8 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 dependencies {
     compile 'io.vavr:vavr:1.0.0-alpha-3'
